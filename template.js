@@ -31,4 +31,44 @@ let typesBackgroundClasses = {
         "background": "bg-normal",
         "background-img": "bg-img-normal"
     },
+    "electric": {
+        "background": "bg-electric",
+        "background-img": "bg-img-electric"
+    },
+    "rock": {
+        "background": "bg-rock",
+        "background-img": "bg-img-rock"
+    },
+    "dragon": {
+        "background": "bg-dragon",
+        "background-img": "bg-img-dragon"
+    },
+    "ghost": {
+        "background": "bg-ghost",
+        "background-img": "bg-img-ghost"
+    },
+    "dark": {
+        "background": "bg-dark",
+        "background-img": "bg-img-dark"
+    },
+    "steel": {
+        "background": "bg-steel",
+        "background-img": "bg-img-steel"
+    },
+    "fairy": {
+        "background": "bg-fairy",
+        "background-img": "bg-img-fairy"
+    },
+    "psychic": {
+        "background": "bg-psychic",
+        "background-img": "bg-img-psychic"
+    },
+    "fighting": {
+        "background": "bg-fighting",
+        "background-img": "bg-img-fighting"
+    },
+    "ground": {
+        "background": "bg-ground",
+        "background-img": "bg-img-ground"
+    },
 };

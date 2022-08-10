@@ -13,6 +13,7 @@
     --dragon: #6F35FC;
     --ghost: #735797;
     --dark: #705746;
+    --ground: #E2BF65;
     --steel: #B7B7CE;
     --fairy: #D685AD;
     --psychic: #F95587;
@@ -59,6 +60,22 @@
     background-image: linear-gradient(to bottom, var(--poison) 0%, black 50%);
 }
 
+.bg-img-ground{
+    background-image: linear-gradient(to bottom, var(--ground) 0%, black 50%);
+}
+
+.bg-img-electric{
+    background-image: linear-gradient(to bottom, var(--electric) 0%, black 50%);
+}
+
+.bg-img-fairy{
+    background-image: linear-gradient(to bottom, var(--fairy) 0%, black 50%);
+}
+
+.bg-img-fighting{
+    background-image: linear-gradient(to bottom, var(--fighting) 0%, black 50%);
+}
+
 .bg-grass{
     background-color: var(--grass);
 }
@@ -91,9 +108,22 @@
     background-color: var(--poison);
 }
 
-.bg-bug{
-    background-color: var(--bug);
+.bg-electric{
+    background-color: var(--electric);
 }
+
+.bg-ground{
+    background-color: var(--ground);
+}
+
+.bg-fairy{
+    background-color: var(--fairy);
+}
+
+.bg-fighting{
+    background-color: var(--fighting);
+}
+
 
 
 /* general Classes */

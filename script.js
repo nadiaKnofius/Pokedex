@@ -15,6 +15,17 @@ async function loadfirst20Pokemon() {
     }
 }
 
+async function add20morePokemon() {
+    let maxi = allPokemon.length + 20;
+    for (let i = allPokemon.length; i < maxi; i++) {
+        let id = i + 1;
+        let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+        let response = await fetch(url);
+        let responseAsJson = await response.json();
+        pushDataOfCurrentPokemonToArray(responseAsJson, i, id);
+    }
+}
+
 function pushDataOfCurrentPokemonToArray(responseAsJson, i, id) {
     allPokemon[i] = {
         "name": responseAsJson.name,
@@ -35,6 +46,27 @@ function showPokemonCardsInHTML() {
     let cardContent = document.getElementById('card-content');
     cardContent.innerHTML = '';
     for (let i = 0; i < allPokemon.length; i++) {
+        let name = allPokemon[i].name;
+        let id = allPokemon[i].id;
+        let type1 = allPokemon[i].types.type1;
+        let type2 = allPokemon[i].types.type2;
+        let img = allPokemon[i].img;
+        let bgType1 = typesBackgroundClasses[type1].background;
+        let bgType2;
+        if (type2.length > 1){
+        bgType2 = typesBackgroundClasses[type2]['background'];
+        }
+        let bgImg = typesBackgroundClasses[type1]['background-img'];
+        cardContent.innerHTML += showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i);
+    }
+}
+
+
+function add20morePokemonCardsInHTML(){
+    let cardContent = document.getElementById('card-content');
+    let mini = allPokemon.length - 20;
+    let maxi = allPokemon.length;
+    for (let i = mini; i < maxi; i++) {
         let name = allPokemon[i].name;
         let id = allPokemon[i].id;
         let type1 = allPokemon[i].types.type1;
