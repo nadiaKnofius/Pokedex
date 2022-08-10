@@ -1,0 +1,176 @@
+body{
+    margin: 0;
+    background-color: black;
+}
+
+h1{
+    margin: 0;
+}
+
+.main-nav{
+    width: 100%;
+    height: 75px;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    position: fixed;
+    z-index: 100;
+}
+
+.headline{
+    color: white;
+    font-size: 32px;
+    margin: 0;
+    height: 60px;
+    margin-bottom: 18px;
+}
+
+.pokeball-logo{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+}
+
+.nav-icons{
+    position: relative;
+    height: 100%;
+    width: 30%;
+}
+
+#search-icon{
+    position: absolute;
+    width: 40px;
+    top: 84px;
+}
+
+#pokeball-icon{
+    position: absolute;
+    width: 13px;
+    top: 93px;
+    right: 35px;
+}
+
+
+#menu-icon{
+    width: 35px;
+    object-fit: contain;
+}
+
+
+.mobile-nav{
+    background-color:  rgba(0, 0, 0, 0.8);
+    font-size: 16px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0 12px 12px 12px;
+    color: white;
+    border-radius: 0 0 0 10px;
+    box-shadow: 0px 0px 15px 5px rgba(255,255,255,0.65);
+}
+
+.animateFadeOut{
+    animation: fadeOut 1s ease 0s 1 normal forwards;
+}
+
+.animateFadeIn{
+    animation: fadeIn 1s ease 0s 1 normal forwards;
+}
+
+.content{
+    background-image: url('../img/bg.png');
+    background-position: right;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.card-content{
+    height: 100%;
+    width: 80%;
+    margin-top: 100px;
+}
+
+.card{
+    height: 250px;
+    color: white;
+    margin-bottom: 50px;
+}
+
+.card-main{
+    position: relative;
+    height: 55%;
+}
+
+.poke-names{
+    padding-left: 16px;
+    margin: 0;
+}
+
+.poke-img{
+    width: 170px;
+}
+
+.poke-img-container{
+    position: absolute;
+    top: -27px;
+    right: 11px;
+}
+
+.id{
+    padding: 16px 0 0 16px;
+}
+
+.type{
+       width: 30%;
+       border-radius: 10px;
+       margin-left: 16px;
+       display: flex;
+       justify-content: center;
+       align-items: end;
+       padding: 4px 0 4px 0;
+       height: 37px;
+       margin-bottom: 8px;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+
+    0% {
+        transform: translateX(100px);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(100px);
+    }
+}

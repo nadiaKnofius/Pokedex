@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokedex</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/variablesAndGeneral.css">
+    <script src="script.js"></script>
+    <script src="template.js"></script>
+</head>
+
+<body onload="init()">
+    <nav class="main-nav d-flex">
+        <div class="logo d-flex align-items-center">
+            <img class="pokeball-logo" src="img/pokeball.png" alt="">
+            <h2 class="headline d-flex align-items-center font-hollow">Pokedex</h2>
+
+        </div>
+        <div class="menu d-flex">
+            <img id="menu-icon" src="img/menu-bar.png" onclick="openMobilNav()" alt="">
+
+            <!-- <div class="nav-icons">
+                <img id="search-icon" src="img/search.png" alt="">
+                <img id="pokeball-icon" src="img/pokeball-icon.png" alt="">
+            </div> -->
+        </div>
+        <nav id="mobile-nav" class="mobile-nav d-none">
+            <div class="menu-links">
+                <div class="d-flex justify-content-end">
+                    <p class="m-0 text-center bg-lila border-r-10 p-6" onclick="closeMobileNav()">&#10006</p>
+                </div>
+                <p class="m-0 text-center bg-lila border-r-10 p-6 font-solid">Suche</p>
+                <a class="text-center bg-lila border-r-10 p-6 font-solid" href="#">Impressum</a>
+            </div>
+        </nav>
+    </nav>
+
+    <div class="content d-flex justify-content-center">
+        <div id="card-content" class="card-content">
+
+            <div class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid bg-img-grass">
+                <div class="w-100 card-header">
+                    <div class="id">#1</div>
+                    <h2 id="name1" class="poke-names font-hollow">Glumander</h2>
+                </div>
+                <div class="card-main d-flex w-100 justify-content-between align-items-center">
+                    <div class="w-100">
+                        <div id="type1-1" class="type bg-grass">Typ1</div>
+                        <div id="type2-1" class="type bg-fire">Typ2</div>
+                    </div>
+                    <div class="poke-img-container">
+                        <img id="img1" class="poke-img" src="img/pokeball-icon.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid bg-img-fire">
+                <div class="w-100 card-header">
+                    <div class="id">#1</div>
+                    <h2 class="poke-names font-hollow">Glumander</h2>
+                </div>
+                <div class="card-main d-flex w-100 justify-content-between align-items-center">
+                    <div class="w-100">
+                        <div class="type bg-grass">Typ1</div>
+                        <div class="type bg-fire">Typ2</div>
+                    </div>
+                    <div class="poke-img-container">
+                        <img class="poke-img" src="img/pokeball-icon.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid bg-img-water">
+                <div class="w-100 card-header">
+                    <div class="id">#1</div>
+                    <h2 class="poke-names font-hollow">Glumander</h2>
+                </div>
+                <div class="card-main d-flex w-100 justify-content-between align-items-center">
+                    <div class="w-100">
+                        <div class="type bg-grass">Typ1</div>
+                        <div class="type bg-fire">Typ2</div>
+                    </div>
+                    <div class="poke-img-container">
+                        <img class="poke-img" src="img/pokeball-icon.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid bg-img-ice">
+                <div class="w-100 card-header">
+                    <div class="id">#1</div>
+                    <h2 class="poke-names font-hollow">Glumander</h2>
+                </div>
+                <div class="card-main d-flex w-100 justify-content-between align-items-center">
+                    <div class="w-100">
+                        <div class="type bg-grass">Typ1</div>
+                        <div class="type bg-fire">Typ2</div>
+                    </div>
+                    <div class="poke-img-container">
+                        <img class="poke-img" src="img/pokeball-icon.png" alt="">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
