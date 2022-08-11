@@ -96,6 +96,10 @@
     background-image: linear-gradient(to bottom, var(--dragon) 0%, black 50%);
 }
 
+.bg-img-dark{
+    background-image: linear-gradient(to bottom, var(--dark) 0%, black 50%);
+}
+
 .bg-grass{
     background-color: var(--grass);
 }
@@ -164,7 +168,9 @@
     background-color: var(--dragon);
 }
 
-
+.bg-dark{
+    background-color: var(--dark);
+}
 
 /* general Classes */
 

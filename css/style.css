@@ -1,13 +1,13 @@
-body{
+body {
     margin: 0;
     background-color: black;
 }
 
-h1{
+h1 {
     margin: 0;
 }
 
-.main-nav{
+.main-nav {
     width: 100%;
     height: 75px;
     background-color: rgba(0, 0, 0, 0.9);
@@ -18,7 +18,7 @@ h1{
     z-index: 100;
 }
 
-.headline{
+.headline {
     color: white;
     font-size: 32px;
     margin: 0;
@@ -26,25 +26,25 @@ h1{
     margin-bottom: 18px;
 }
 
-.pokeball-logo{
+.pokeball-logo {
     width: 50px;
     height: 50px;
     object-fit: contain;
 }
 
-.nav-icons{
+.nav-icons {
     position: relative;
     height: 100%;
     width: 30%;
 }
 
-#search-icon{
+#search-icon {
     position: absolute;
     width: 40px;
     top: 84px;
 }
 
-#pokeball-icon{
+#pokeball-icon {
     position: absolute;
     width: 13px;
     top: 93px;
@@ -52,14 +52,14 @@ h1{
 }
 
 
-#menu-icon{
+#menu-icon {
     width: 35px;
     object-fit: contain;
 }
 
 
-.mobile-nav{
-    background-color:  rgba(0, 0, 0, 0.8);
+.mobile-nav {
+    background-color: rgba(0, 0, 0, 0.8);
     font-size: 16px;
     position: absolute;
     top: 0;
@@ -67,18 +67,18 @@ h1{
     padding: 0 12px 12px 12px;
     color: white;
     border-radius: 0 0 0 10px;
-    box-shadow: 0px 0px 15px 5px rgba(255,255,255,0.65);
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.65);
 }
 
-.animateFadeOut{
+.animateFadeOut {
     animation: fadeOut 1s ease 0s 1 normal forwards;
 }
 
-.animateFadeIn{
+.animateFadeIn {
     animation: fadeIn 1s ease 0s 1 normal forwards;
 }
 
-.content{
+.content {
     background-image: url('../img/bg.png');
     background-position: right;
     background-repeat: no-repeat;
@@ -86,55 +86,68 @@ h1{
     overflow-y: auto;
 }
 
-.card-content{
+.content::-webkit-scrollbar {
+    width: 10px;
+  }
+
+.content::-webkit-scrollbar-track {
+    background: #f1f1f10a;
+  }  
+
+.card-content {
     height: 100%;
     width: 80%;
     margin-top: 100px;
 }
 
-.card{
+.card {
     height: 250px;
     color: white;
     margin-bottom: 50px;
 }
 
-.card-main{
+.card:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 15px 5px rgba(255, 255, 255, 0.65);
+}
+
+.card-main {
     position: relative;
     height: 55%;
 }
 
-.poke-names{
+.poke-names {
     padding-left: 16px;
     margin: 0;
 }
 
-.poke-img{
+.poke-img {
     width: 170px;
 }
 
-.poke-img-container{
+.poke-img-container {
     position: absolute;
     top: -27px;
     right: 11px;
 }
 
-.id{
+.id {
     padding: 16px 0 0 16px;
 }
 
-.type{
-       width: 30%;
-       border-radius: 10px;
-       margin-left: 16px;
-       display: flex;
-       justify-content: center;
-       align-items: end;
-       padding: 4px 0 4px 0;
-       height: 37px;
-       margin-bottom: 8px;
+.type {
+    width: 30%;
+    border-radius: 10px;
+    margin-left: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    padding: 4px 0 4px 0;
+    height: 37px;
+    margin-bottom: 8px;
 }
 
-a{
+a {
     text-decoration: none;
     color: white;
 }
@@ -174,3 +187,35 @@ a{
         transform: translateX(100px);
     }
 }
+
+
+@media (max-width: 370px) {
+    .poke-img-container {
+        top: 10px;
+        right: -12px;
+    }
+
+    .poke-img {
+        width: 138px;
+    }
+}
+
+@media (min-width: 500px) {
+   .card{
+    width: 380px;
+    margin-left: 16px;
+    margin-right: 16px;
+   }
+
+   .card-content{
+    display: flex;
+    flex-wrap: wrap;
+    width: 87%;
+   } 
+}
+
+/* @media(min-width: 1230px){
+    .content{
+        background-position: center;
+    }
+} */

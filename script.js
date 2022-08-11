@@ -3,12 +3,13 @@ let allPokemon = [];
 async function init() {
     await loadfirst20Pokemon();
     showPokemonCardsInHTML();
+    document.getElementById('content').onscroll = checkScrollY();
 }
 
 
 async function loadfirst20Pokemon() {
     for (let i = 0; i < 20; i++) {
-        await fetchOnePokemon(i); 
+        await fetchOnePokemon(i);
     }
 }
 
@@ -16,7 +17,7 @@ async function loadfirst20Pokemon() {
 async function add20morePokemon() {
     let maxi = allPokemon.length + 20;
     for (let i = allPokemon.length; i < maxi; i++) {
-       await fetchOnePokemon(i);
+        await fetchOnePokemon(i);
     }
     add20morePokemonCardsInHTML();
 }
@@ -25,9 +26,7 @@ async function add20morePokemon() {
 async function fetchOnePokemon(i) {
     let id = i + 1;
     let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
-    document.getElementById('loading').classList.remove('d-none');
     let response = await fetchData(url);
-    document.getElementById('loading').classList.add('d-none');
     let responseAsJson = await response.json();
     pushDataOfCurrentPokemonToArray(responseAsJson, i, id);
 }
@@ -109,7 +108,7 @@ function add20morePokemonCardsInHTML() {
 }
 
 
-function getBasicCardDataFromArray(mini, maxi, cardContent){
+function getBasicCardDataFromArray(mini, maxi, cardContent) {
     for (let i = mini; i < maxi; i++) {
         let name = allPokemon[i].name;
         let id = allPokemon[i].id;
@@ -127,39 +126,20 @@ function getBasicCardDataFromArray(mini, maxi, cardContent){
 }
 
 
-// window.addEventListener('scroll', checkScrollY)
-
-
-// function checkScrollY() {
-//     let scrollY = window.scrollY;
-//     let lastPokemonId = allPokemon.length - 1;
-//     let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
-//     console.log(scrollY);
-//     console.log(locationLastPokemonCard);
-// }
+      document.getElementById('content').onscroll = checkScrollY();
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function checkScrollY() {
+    try{
+        let scrollY = document.getElementById('content').scrollTop;
+        let lastPokemonId = allPokemon.length - 3;
+        let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
+        console.log(scrollY);
+        console.log(locationLastPokemonCard);
+    }
+    catch(err){}
+}
 
 
 function closeMobileNav() {
