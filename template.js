@@ -72,3 +72,24 @@ let typesBackgroundClasses = {
         "background-img": "bg-img-ground"
     },
 };
+
+
+function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i) {
+    return `
+    <div id="${i}" class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid ${bgImg}">
+    <div class="w-100 card-header">
+        <div class="id">#${id}</div>
+        <h2 class="poke-names font-hollow">${name}</h2>
+    </div>
+    <div class="card-main d-flex w-100 justify-content-between align-items-center">
+        <div class="w-100">
+            <div class="type ${bgType1}">${type1}</div>
+            <div class="type ${bgType2}">${type2}</div>
+        </div>
+        <div class="poke-img-container">
+            <img id="img1" class="poke-img" src="${img}" alt="">
+        </div>
+    </div>
+</div>
+`
+}

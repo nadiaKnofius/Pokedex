@@ -76,6 +76,26 @@
     background-image: linear-gradient(to bottom, var(--fighting) 0%, black 50%);
 }
 
+.bg-img-psychic{
+    background-image: linear-gradient(to bottom, var(--psychic) 0%, black 50%);
+}
+
+.bg-img-rock{
+    background-image: linear-gradient(to bottom, var(--rock) 0%, black 50%);
+}
+
+.bg-img-ghost{
+    background-image: linear-gradient(to bottom, var(--ghost) 0%, black 50%);
+}
+
+.bg-img-steel{
+    background-image: linear-gradient(to bottom, var(--steel) 0%, black 50%);
+}
+
+.bg-img-dragon{
+    background-image: linear-gradient(to bottom, var(--dragon) 0%, black 50%);
+}
+
 .bg-grass{
     background-color: var(--grass);
 }
@@ -122,6 +142,26 @@
 
 .bg-fighting{
     background-color: var(--fighting);
+}
+
+.bg-psychic{
+    background-color: var(--psychic);
+}
+
+.bg-rock{
+    background-color: var(--rock);
+}
+
+.bg-ghost{
+    background-color: var(--ghost);
+}
+
+.bg-steel{
+    background-color: var(--steel);
+}
+
+.bg-dragon{
+    background-color: var(--dragon);
 }
 
 

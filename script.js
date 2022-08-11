@@ -1,32 +1,56 @@
 let allPokemon = [];
 
 async function init() {
-   await loadfirst20Pokemon();
-   showPokemonCardsInHTML(); 
+    await loadfirst20Pokemon();
+    showPokemonCardsInHTML();
 }
+
 
 async function loadfirst20Pokemon() {
     for (let i = 0; i < 20; i++) {
-        let id = i + 1;
-        let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
-        let response = await fetch(url);
-        let responseAsJson = await response.json();
-        pushDataOfCurrentPokemonToArray(responseAsJson, i, id);
+        await fetchOnePokemon(i); 
     }
 }
+
 
 async function add20morePokemon() {
     let maxi = allPokemon.length + 20;
     for (let i = allPokemon.length; i < maxi; i++) {
-        let id = i + 1;
-        let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
-        let response = await fetch(url);
-        let responseAsJson = await response.json();
-        pushDataOfCurrentPokemonToArray(responseAsJson, i, id);
+       await fetchOnePokemon(i);
     }
+    add20morePokemonCardsInHTML();
 }
 
+
+async function fetchOnePokemon(i) {
+    let id = i + 1;
+    let url = `https://pokeapi.co/api/v2/pokemon/${id}/`;
+    document.getElementById('loading').classList.remove('d-none');
+    let response = await fetchData(url);
+    document.getElementById('loading').classList.add('d-none');
+    let responseAsJson = await response.json();
+    pushDataOfCurrentPokemonToArray(responseAsJson, i, id);
+}
+
+
+function fetchData(url) {
+    return fetch(url);
+}
+
+
 function pushDataOfCurrentPokemonToArray(responseAsJson, i, id) {
+    addBasicCardDataToArray(responseAsJson, i, id);
+    addMoreDataToArray(responseAsJson, i, id);
+}
+
+
+/**
+ * adds basic data (relevant for Pokemon card overview) to array
+ * @param {object} responseAsJson response of Pokemon API as Json
+ * @param {number} i index of array
+ * @param {number} id id of Pokemon
+ */
+function addBasicCardDataToArray(responseAsJson, i, id) {
     allPokemon[i] = {
         "name": responseAsJson.name,
         "id": id,
@@ -42,30 +66,50 @@ function pushDataOfCurrentPokemonToArray(responseAsJson, i, id) {
 }
 
 
-function showPokemonCardsInHTML() {
-    let cardContent = document.getElementById('card-content');
-    cardContent.innerHTML = '';
-    for (let i = 0; i < allPokemon.length; i++) {
-        let name = allPokemon[i].name;
-        let id = allPokemon[i].id;
-        let type1 = allPokemon[i].types.type1;
-        let type2 = allPokemon[i].types.type2;
-        let img = allPokemon[i].img;
-        let bgType1 = typesBackgroundClasses[type1].background;
-        let bgType2;
-        if (type2.length > 1){
-        bgType2 = typesBackgroundClasses[type2]['background'];
-        }
-        let bgImg = typesBackgroundClasses[type1]['background-img'];
-        cardContent.innerHTML += showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i);
+function addMoreDataToArray(responseAsJson, i) {
+    allPokemon[i].weight = responseAsJson.weight;
+    allPokemon[i].height = responseAsJson.height;
+    addStatsToArray(responseAsJson, i);
+    addAbilitiesToArray(responseAsJson, i);
+}
+
+
+function addAbilitiesToArray(responseAsJson, i) {
+    allPokemon[i].abilities = [];
+    for (let j = 0; j < responseAsJson.abilities.length; j++) {
+        allPokemon[i].abilities[j] = responseAsJson.abilities[j].ability.name;
     }
 }
 
 
-function add20morePokemonCardsInHTML(){
+function addStatsToArray(responseAsJson, i) {
+    allPokemon[i].stats = [];
+    for (let j = 0; j < responseAsJson.stats.length; j++) {
+        allPokemon[i].stats[j] = { "name": "", "value": "" }
+        allPokemon[i].stats[j].name = responseAsJson.stats[j].stat.name;
+        allPokemon[i].stats[j].value = responseAsJson.stats[j].base_stat;
+    }
+}
+
+
+function showPokemonCardsInHTML() {
+    let cardContent = document.getElementById('card-content');
+    cardContent.innerHTML = '';
+    let mini = 0;
+    let maxi = allPokemon.length;
+    getBasicCardDataFromArray(mini, maxi, cardContent);
+}
+
+
+function add20morePokemonCardsInHTML() {
     let cardContent = document.getElementById('card-content');
     let mini = allPokemon.length - 20;
     let maxi = allPokemon.length;
+    getBasicCardDataFromArray(mini, maxi, cardContent);
+}
+
+
+function getBasicCardDataFromArray(mini, maxi, cardContent){
     for (let i = mini; i < maxi; i++) {
         let name = allPokemon[i].name;
         let id = allPokemon[i].id;
@@ -74,8 +118,8 @@ function add20morePokemonCardsInHTML(){
         let img = allPokemon[i].img;
         let bgType1 = typesBackgroundClasses[type1].background;
         let bgType2;
-        if (type2.length > 1){
-        bgType2 = typesBackgroundClasses[type2]['background'];
+        if (type2.length > 1) {
+            bgType2 = typesBackgroundClasses[type2]['background'];
         }
         let bgImg = typesBackgroundClasses[type1]['background-img'];
         cardContent.innerHTML += showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i);
@@ -83,36 +127,16 @@ function add20morePokemonCardsInHTML(){
 }
 
 
-function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i) {
-    return `
-    <div id="${i}" class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid ${bgImg}">
-    <div class="w-100 card-header">
-        <div class="id">#${id}</div>
-        <h2 class="poke-names font-hollow">${name}</h2>
-    </div>
-    <div class="card-main d-flex w-100 justify-content-between align-items-center">
-        <div class="w-100">
-            <div class="type ${bgType1}">${type1}</div>
-            <div class="type ${bgType2}">${type2}</div>
-        </div>
-        <div class="poke-img-container">
-            <img id="img1" class="poke-img" src="${img}" alt="">
-        </div>
-    </div>
-</div>
-`
-}
+// window.addEventListener('scroll', checkScrollY)
 
 
-window.onscroll = checkScrollY;
-
-function checkScrollY(){
-    let scrollY = window.scrollY;
-    let lastPokemonId = allPokemon.length - 1;
-    let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
-    console.log(scrollY);
-    console.log(locationLastPokemonCard);
-}
+// function checkScrollY() {
+//     let scrollY = window.scrollY;
+//     let lastPokemonId = allPokemon.length - 1;
+//     let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
+//     console.log(scrollY);
+//     console.log(locationLastPokemonCard);
+// }
 
 
 
