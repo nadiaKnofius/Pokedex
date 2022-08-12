@@ -76,7 +76,7 @@ let typesBackgroundClasses = {
 
 function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i) {
     return `
-        <div id="${i}" class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid ${bgImg}">
+        <div id="${i}" class="card d-flex flex-column justify-content-between align-items-center border-r-10 font-solid ${bgImg}" onclick="showDetailCard(${id})">
             <div class="w-100 card-header">
             <div class="id">#&nbsp${id}</div>
             <h2 class="poke-names font-hollow">${name}</h2>

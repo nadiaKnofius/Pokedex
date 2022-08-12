@@ -20,13 +20,18 @@
             <h2 class="headline d-flex align-items-center font-hollow">Pokedex</h2>
 
         </div>
-        <div class="menu d-flex">
+        <div id="menu" class="menu d-flex">
             <img id="menu-icon" src="img/menu-bar.png" onclick="openMobilNav()" alt="">
 
-            <!-- <div class="nav-icons">
-                <img id="search-icon" src="img/search.png" alt="">
-                <img id="pokeball-icon" src="img/pokeball-icon.png" alt="">
-            </div> -->
+            <div class="nav-icons">
+                <img id="search-icon" src="img/search-pokemon.png" onclick="showSearchInputField()" alt="">
+                <div id="search-blend" class="search-blend">Suche Pokemon...</div>
+                <div id="search-input-container" class="d-flex align-items-center">
+                    <input id="search-input" class="d-none" onkeyup="searchPokemon()" type="text" placeholder="Suche anhand von Namen, Id oder Typ...">
+                    <p id="close-mark" class="d-none m-0 text-center bg-lila border-r-10 p-6 close-mark" onclick="hideSearchInputField()">&#10006</p>
+                </div>
+                
+            </div>
         </div>
         <nav id="mobile-nav" class="mobile-nav d-none">
             <div class="menu-links">
@@ -39,20 +44,20 @@
         </nav>
     </nav>
 
-    <div class="d-flex justify-content-center flex-column">
+    <div class="content-container d-flex justify-content-center flex-column">
         <div id="content" class="content d-flex justify-content-center">
             <div id="card-content" class="card-content justify-content-center">
 
             </div>
 
-            <div id="loading" class="loading d-none">
-                <h2>Loading</h2>
-            </div>
-            
+        </div>
+        <div id="pokemon-details" class="d-none pokemon-details d-flex w-100 justify-content-center align-items-center">
+            <div id="detail-card" class="detail-card">
 
+            </div>
         </div>
         <div class="w-100 d-flex justify-content-center">
-            <button onclick="add20morePokemon()"><h2 class="font-solid">Loading</h2></button>
+            <button onclick="add20morePokemon()"><h2 class="font-solid">load more</h2></button>
         </div>
     </div>
 </body>
