@@ -27,7 +27,7 @@
                 <img id="search-icon" src="img/search-pokemon.png" onclick="showSearchInputField()" alt="">
                 <div id="search-blend" class="search-blend">Suche Pokemon...</div>
                 <div id="search-input-container" class="d-flex align-items-center">
-                    <input id="search-input" class="d-none" onkeyup="searchPokemon()" type="text" placeholder="Suche anhand von Namen, Id oder Typ...">
+                    <input id="search-input" class="d-none" onkeyup="searchPokemon()" type="text" placeholder="Suche anhand von Namen oder Id...">
                     <p id="close-mark" class="d-none m-0 text-center bg-lila border-r-10 p-6 close-mark" onclick="hideSearchInputField()">&#10006</p>
                 </div>
                 
@@ -52,11 +52,12 @@
 
         </div>
         <div id="pokemon-details" class="d-none pokemon-details d-flex w-100 justify-content-center align-items-center">
-            <div id="detail-card" class="detail-card">
-
-            </div>
+            <div id="detail-card" class="detail-card flex-column">
+                
+               
+             </div>
         </div>
-        <div class="w-100 d-flex justify-content-center">
+        <div id="morePokemon"class="d-none w-100 d-flex justify-content-center">
             <button onclick="add20morePokemon()"><h2 class="font-solid">load more</h2></button>
         </div>
     </div>

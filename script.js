@@ -1,4 +1,5 @@
 let allPokemon = [];
+let currentbgImg;
 
 async function init() {
     await loadfirst20Pokemon();
@@ -39,7 +40,7 @@ function fetchData(url) {
 
 function pushDataOfCurrentPokemonToArray(responseAsJson, i, id) {
     addBasicCardDataToArray(responseAsJson, i, id);
-    addMoreDataToArray(responseAsJson, i, id);
+    addDetailDataToArray(responseAsJson, i, id);
 }
 
 
@@ -65,7 +66,7 @@ function addBasicCardDataToArray(responseAsJson, i, id) {
 }
 
 
-function addMoreDataToArray(responseAsJson, i) {
+function addDetailDataToArray(responseAsJson, i) {
     allPokemon[i].weight = responseAsJson.weight;
     allPokemon[i].height = responseAsJson.height;
     addStatsToArray(responseAsJson, i);
@@ -110,36 +111,34 @@ function add20morePokemonCardsInHTML() {
 
 function getBasicCardDataFromArray(mini, maxi, cardContent) {
     for (let i = mini; i < maxi; i++) {
-        let name = allPokemon[i].name;
-        let id = allPokemon[i].id;
         let type1 = allPokemon[i].types.type1;
         let type2 = allPokemon[i].types.type2;
-        let img = allPokemon[i].img;
+        let bgImg = typesBackgroundClasses[type1]['background-img'];
         let bgType1 = typesBackgroundClasses[type1].background;
         let bgType2;
         if (type2.length > 1) {
             bgType2 = typesBackgroundClasses[type2]['background'];
         }
-        let bgImg = typesBackgroundClasses[type1]['background-img'];
-        cardContent.innerHTML += showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i);
+          cardContent.innerHTML += showPokemonCardsInHTMLTemplate(allPokemon[i].name, allPokemon[i].id, 
+            allPokemon[i].types.type1, allPokemon[i].types.type2, allPokemon[i].img, bgImg, bgType1, bgType2, i);
     }
 }
 
 
-document.getElementById('content').onscroll = checkScrollY();
+// document.getElementById('content').onscroll = checkScrollY();
 
 
 
-function checkScrollY() {
-    try {
-        let scrollY = document.getElementById('content').scrollTop;
-        let lastPokemonId = allPokemon.length - 3;
-        let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
-        console.log(scrollY);
-        console.log(locationLastPokemonCard);
-    }
-    catch (err) { }
-}
+// function checkScrollY() {
+//     try {
+//         let scrollY = document.getElementById('content').scrollTop;
+//         let lastPokemonId = allPokemon.length - 3;
+//         let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
+//         console.log(scrollY);
+//         console.log(locationLastPokemonCard);
+//     }
+//     catch (err) { }
+// }
 
 
 function showSearchInputField() {
@@ -151,7 +150,8 @@ function showSearchInputField() {
     addClassFadeIn('close-mark');
     removeClassDNone('search-input');
     removeClassDNone('close-mark');
-    // document.getElementById('menu').classList.remove('menu');
+    document.getElementById('menu').classList.add('menuhv');
+    //TODO
 }
 
 
@@ -167,6 +167,7 @@ function hideSearchInputField() {
     document.getElementById('search-input').value = '';
     searchPokemon();
 }
+
 
 function searchPokemon() {
     let input = document.getElementById('search-input').value;
@@ -187,16 +188,14 @@ async function searchPokemonId(id) {
     if (allPokemon[indexInArray]) {
         getBasicCardDataFromArray(indexInArray, id, cardContent);
     } else {
-        cardContent.innerHTML = `
-    <h2 class="load-text">loading Pokemon, please wait</h2>
-    <img class="load" src="img/loading.gif" alt="">`;
+        cardContent.innerHTML = showLoadingGifInHTMLTemplate();
         await add20morePokemon();
         searchPokemonId(id)
     }
 }
 
 
-async function searchPokemonName(input) {
+function searchPokemonName(input) {
     let cardContent = document.getElementById('card-content');
     cardContent.innerHTML = '';
     for (let i = 0; i < allPokemon.length; i++) {
@@ -206,14 +205,16 @@ async function searchPokemonName(input) {
             getBasicCardDataFromArray(i, id, cardContent);
         }
     }
+    checkInputLength(cardContent, input);
+}
+
+
+async function checkInputLength(cardContent, input){
     if (cardContent.innerHTML === '') {
         if (input.length < 3) {
-            cardContent.innerHTML = `
-            <h2 class="load-text">please type min 3 characters</h2>`
+            cardContent.innerHTML = `<h2 class="load-text">please type min 3 characters</h2>`;
         } else {
-            cardContent.innerHTML = `
-            <h2 class="load-text">loading Pokemon, please wait</h2>
-            <img class="load" src="img/loading.gif" alt="">`;
+            cardContent.innerHTML = showLoadingGifInHTMLTemplate();
             await add20morePokemon();
             searchPokemonName(input);
         }
@@ -234,9 +235,36 @@ function showDetailCard(id) {
         bgType2 = typesBackgroundClasses[type2]['background'];
     }
     let bgImg = typesBackgroundClasses[type1]['background-img'];
+    changeBgOfDetailCard(bgImg);
+    document.getElementById('detail-card').innerHTML = showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img);
+    openFirstTab( 'stats');
+}
+
+async function nextDetailCard(id){
+    let nextId = id + 1;
+    if (!allPokemon[id]){
+        await add20morePokemon();
+    }
+    showDetailCard(nextId);
+}
 
 
-    document.getElementById('detail-card').classList.add(bgImg);
+function previousDetailCard(id){
+    let previousId = id - 1;
+    if (previousId === 0){
+        alert('Der Vorgang kann aktuell nicht ausgeführt werden. Es sind noch nicht alle Pokemon geladen')
+    } else {
+        showDetailCard(previousId);
+    }
+    
+}
+
+function changeBgOfDetailCard(bgImg){
+    if(!(bgImg == currentbgImg) || !currentbgImg){
+    document.getElementById('detail-card').classList.add(`${bgImg}`);
+    document.getElementById('detail-card').classList.remove(`${currentbgImg}`);
+    currentbgImg = bgImg;
+    }
 }
 
 
@@ -275,3 +303,30 @@ function removeClassFadeOut(id) {
 function addClassFadeOut(id) {
     document.getElementById(id).classList.add('animateFadeOut');
 }
+
+
+function openTab(evt, tabName) {
+    let tablinks;
+    let tabcontent = document.getElementsByClassName("tabcontent");
+    for (let i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+
+
+  function openFirstTab(tabName){
+    let activeTab = document.getElementById(tabName);
+    activeTab.style.display ="block";
+    document.getElementById('stats-btn').classList.add('active');
+  }
+
+
+  function closeDetailCard(){
+    addClassDNone('pokemon-details');
+  }
