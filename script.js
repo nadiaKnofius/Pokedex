@@ -4,7 +4,6 @@ let currentbgImg;
 async function init() {
     await loadfirst20Pokemon();
     showPokemonCardsInHTML();
-    document.getElementById('content').onscroll = checkScrollY();
 }
 
 
@@ -12,15 +11,6 @@ async function loadfirst20Pokemon() {
     for (let i = 0; i < 20; i++) {
         await fetchOnePokemon(i);
     }
-}
-
-
-async function add20morePokemon() {
-    let maxi = allPokemon.length + 20;
-    for (let i = allPokemon.length; i < maxi; i++) {
-        await fetchOnePokemon(i);
-    }
-    add20morePokemonCardsInHTML();
 }
 
 
@@ -101,6 +91,15 @@ function showPokemonCardsInHTML() {
 }
 
 
+async function add20morePokemon() {
+    let maxi = allPokemon.length + 20;
+    for (let i = allPokemon.length; i < maxi; i++) {
+        await fetchOnePokemon(i);
+    }
+    add20morePokemonCardsInHTML();
+}
+
+
 function add20morePokemonCardsInHTML() {
     let cardContent = document.getElementById('card-content');
     let mini = allPokemon.length - 20;
@@ -119,56 +118,16 @@ function getBasicCardDataFromArray(mini, maxi, cardContent) {
         if (type2.length > 1) {
             bgType2 = typesBackgroundClasses[type2]['background'];
         }
-          cardContent.innerHTML += showPokemonCardsInHTMLTemplate(allPokemon[i].name, allPokemon[i].id, 
+        cardContent.innerHTML += showPokemonCardsInHTMLTemplate(allPokemon[i].name, allPokemon[i].id,
             allPokemon[i].types.type1, allPokemon[i].types.type2, allPokemon[i].img, bgImg, bgType1, bgType2, i);
     }
 }
 
 
-// document.getElementById('content').onscroll = checkScrollY();
-
-
-
-// function checkScrollY() {
-//     try {
-//         let scrollY = document.getElementById('content').scrollTop;
-//         let lastPokemonId = allPokemon.length - 3;
-//         let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
-//         console.log(scrollY);
-//         console.log(locationLastPokemonCard);
-//     }
-//     catch (err) { }
-// }
-
-
-function showSearchInputField() {
-    addClassDNone('search-icon');
-    addClassDNone('search-blend');
-    removeClassFadeOut('close-mark')
-    removeClassFadeOut('search-input');
-    addClassFadeIn('search-input');
-    addClassFadeIn('close-mark');
-    removeClassDNone('search-input');
-    removeClassDNone('close-mark');
-    document.getElementById('menu').classList.add('menuhv');
-    //TODO
-}
-
-
-function hideSearchInputField() {
-    removeClassDNone('search-icon');
-    removeClassDNone('search-blend');
-    removeClassFadeIn('search-input');
-    addClassFadeOut('search-input');
-    removeClassFadeIn('close-mark');
-    addClassFadeOut('close-mark');
-    setTimeout(addClassDNone, 900, 'search-input');
-    setTimeout(addClassDNone, 900, 'close-mark')
-    document.getElementById('search-input').value = '';
-    searchPokemon();
-}
-
-
+/**
+ * checks, if id or name is searched
+ * shows all Pokemon cards, if inputfield changes to empty
+ */
 function searchPokemon() {
     let input = document.getElementById('search-input').value;
     if (parseInt(input)) {
@@ -181,6 +140,10 @@ function searchPokemon() {
 }
 
 
+/**
+ * checks, if id already exists in array
+ * if not, next 20 Pokemon will be load, processing until id exists in array
+ */
 async function searchPokemonId(id) {
     let cardContent = document.getElementById('card-content');
     cardContent.innerHTML = '';
@@ -195,6 +158,10 @@ async function searchPokemonId(id) {
 }
 
 
+/**
+ * checks, if names in array includes input (min 3 characters)
+ * if not, next 20 Pokemon will be load, processing until name exists in array, which includes input
+ */
 function searchPokemonName(input) {
     let cardContent = document.getElementById('card-content');
     cardContent.innerHTML = '';
@@ -209,7 +176,11 @@ function searchPokemonName(input) {
 }
 
 
-async function checkInputLength(cardContent, input){
+/**
+ * checks, if input length has min 3 characters
+ * if yes, searchPokemonName function will be called
+ */
+async function checkInputLength(cardContent, input) {
     if (cardContent.innerHTML === '') {
         if (input.length < 3) {
             cardContent.innerHTML = `<h2 class="load-text">please type min 3 characters</h2>`;
@@ -234,99 +205,119 @@ function showDetailCard(id) {
     if (type2.length > 1) {
         bgType2 = typesBackgroundClasses[type2]['background'];
     }
-    let bgImg = typesBackgroundClasses[type1]['background-img'];
-    changeBgOfDetailCard(bgImg);
-    document.getElementById('detail-card').innerHTML = showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img);
-    openFirstTab( 'stats');
+    showDetailCardBgSettings(id, type1, type2, bgType1, bgType2, name, img, indexOfArray);
 }
 
-async function nextDetailCard(id){
+
+function showDetailCardBgSettings(id, type1, type2, bgType1, bgType2, name, img, indexOfArray) {
+    let bgImg = typesBackgroundClasses[type1]['background-img'];
+    let height = allPokemon[indexOfArray].height;
+    let weight = allPokemon[indexOfArray].weight;
+    let stats = getStatsOfCurrentPokemon(indexOfArray);
+    let abilities = getAbilitiesOfCurrentPokemon(indexOfArray);
+    console.log(abilities);
+    changeBgOfDetailCard(bgImg);
+    document.getElementById('detail-card').innerHTML = showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img, stats, height, weight);
+    addAbilitiesinHTML(abilities);
+    changeWidthOfProgressBars(stats);
+    openFirstTab('stats');
+}
+
+
+function changeWidthOfProgressBars(stats) {
+    for (let i = 0; i < stats.length; i++) {
+        let progressBarId = document.getElementById(`${stats[i].name}`);
+        let widthOfProgress = calcWidthOfProgressBar(stats[i].value);
+        progressBarId.style.width = `${widthOfProgress}%`;
+    }
+}
+
+
+function getStatsOfCurrentPokemon(indexOfArray) {
+    let stats = [];
+    for (let i = 0; i < allPokemon[indexOfArray].stats.length; i++) {
+        let element = allPokemon[indexOfArray].stats[i];
+        stats.push(element);
+    }
+    return stats;
+}
+
+
+function getAbilitiesOfCurrentPokemon(indexOfArray) {
+    let abilities = [];
+    for (let i = 0; i < allPokemon[indexOfArray].abilities.length; i++) {
+        let element = allPokemon[indexOfArray].abilities[i];
+        abilities.push(element);
+    }
+    return abilities;
+}
+
+
+function addAbilitiesinHTML(abilities) {
+    let abilityContent = document.getElementById('abilities');
+    abilityContent.innerHTML = `<h3>Abilities</h3>`;
+    for (let i = 0; i < abilities.length; i++) {
+        let abilitiy = abilities[i];
+        abilityContent.innerHTML += addAbilitiesinHTMLTemplate(abilitiy);
+    }
+}
+
+
+function addAbilitiesinHTMLTemplate(abilitiy) {
+    return `
+        <p>${abilitiy}</p>
+    `;
+}
+
+/**
+ * shows next detail card
+ * if Pokemon does not exist in array, it loads next 20 Pokemon
+ */
+async function nextDetailCard(id) {
     let nextId = id + 1;
-    if (!allPokemon[id]){
+    if (!allPokemon[id]) {
         await add20morePokemon();
     }
     showDetailCard(nextId);
 }
 
 
-function previousDetailCard(id){
+/**
+ * shows previous detail card
+ * if Pokemon does not exist in array, no previous card will be show
+ */
+function previousDetailCard(id) {
     let previousId = id - 1;
-    if (previousId === 0){
+    if (previousId === 0) {
         alert('Der Vorgang kann aktuell nicht ausgeführt werden. Es sind noch nicht alle Pokemon geladen')
     } else {
         showDetailCard(previousId);
     }
-    
+
 }
 
-function changeBgOfDetailCard(bgImg){
-    if(!(bgImg == currentbgImg) || !currentbgImg){
-    document.getElementById('detail-card').classList.add(`${bgImg}`);
-    document.getElementById('detail-card').classList.remove(`${currentbgImg}`);
-    currentbgImg = bgImg;
+
+/**
+ * supposition: 150 points in every stat is max
+ */
+function calcWidthOfProgressBar(value) {
+    return (value * 100) / 150;
+}
+
+
+document.getElementById('content').addEventListener('scroll', () => {
+    checkScrollY();
+})
+
+
+async function checkScrollY() {
+    try {
+        let scrollY = document.getElementById('content').scrollTop;
+        let lastPokemonId = allPokemon.length - 10;
+        let locationLastPokemonCard = document.getElementById(lastPokemonId).offsetTop;
+        if (scrollY >= locationLastPokemonCard) {
+            await add20morePokemon();
+        }
     }
-}
-
-
-function closeMobileNav() {
-    addClassFadeOut('mobile-nav')
-    removeClassFadeIn('mobile-nav');
-    setTimeout(addClassDNone, 900, 'mobile-nav')
-}
-
-function openMobilNav() {
-    removeClassDNone('mobile-nav');
-    removeClassFadeOut('mobile-nav');
-    addClassFadeIn('mobile-nav');
-}
-
-function removeClassDNone(id) {
-    document.getElementById(id).classList.remove('d-none');
-}
-
-function addClassDNone(id) {
-    document.getElementById(id).classList.add('d-none');
-}
-
-function removeClassFadeIn(id) {
-    document.getElementById(id).classList.remove('animateFadeIn');
-}
-
-function addClassFadeIn(id) {
-    document.getElementById(id).classList.add('animateFadeIn');
-}
-
-function removeClassFadeOut(id) {
-    document.getElementById(id).classList.remove('animateFadeOut');
-}
-
-function addClassFadeOut(id) {
-    document.getElementById(id).classList.add('animateFadeOut');
-}
-
-
-function openTab(evt, tabName) {
-    let tablinks;
-    let tabcontent = document.getElementsByClassName("tabcontent");
-    for (let i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
-    }
-    tablinks = document.getElementsByClassName("tablinks");
-    for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
-    }
-    document.getElementById(tabName).style.display = "block";
-    evt.currentTarget.className += " active";
-  }
-
-
-  function openFirstTab(tabName){
-    let activeTab = document.getElementById(tabName);
-    activeTab.style.display ="block";
-    document.getElementById('stats-btn').classList.add('active');
-  }
-
-
-  function closeDetailCard(){
-    addClassDNone('pokemon-details');
-  }
+    catch (err) { }
+} 

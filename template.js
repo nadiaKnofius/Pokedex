@@ -73,21 +73,6 @@ let typesBackgroundClasses = {
     },
 };
 
-let currentPokemon = {
-    "id": "",
-    "name": "",
-    "img": "",
-    "type1": "",
-    "type2": "",
-    "bgType1": "",
-    "bgType": "",
-    "bgImg": "",
-    "weight": "",
-    "height": "",
-    "stats": [],
-    "abilities": []
-};
-
 
 function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgType1, bgType2, i) {
     return `
@@ -98,8 +83,8 @@ function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgTy
         </div>
         <div class="card-main d-flex w-100 justify-content-between align-items-center">
         <div class="w-100">
-            <div class="type ${bgType1}">${type1}</div>
-            <div class="type ${bgType2}">${type2}</div>
+            <div class="type ${bgType1} d-flex justify-content-center align-items-center">${type1}</div>
+            <div class="type ${bgType2} d-flex justify-content-center align-items-center">${type2}</div>
         </div>
             <div class="poke-img-container">
                 <img id="img1" class="poke-img" src="${img}" alt="">
@@ -110,7 +95,7 @@ function showPokemonCardsInHTMLTemplate(name, id, type1, type2, img, bgImg, bgTy
 }
 
 
-function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
+function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img, stats, weight, height){
     return `
     <div id="${id}" class="cardInDetail d-flex flex-column justify-content-between align-items-center w-100 border-r-10 font-solid">
     <div class="w-100 detail-card-header">
@@ -123,13 +108,13 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
         <img id="img1" class="poke-img" src="${img}" alt="">
     </div>
 <div class="w-100 d-flex justify-content-center">
-    <div class="type ${bgType1}">${type1}</div>
-    <div class="type ${bgType2}">${type2}</div>
+    <div class="type ${bgType1} d-flex justify-content-center align-items-center">${type1}</div>
+    <div class="type ${bgType2} d-flex justify-content-center align-items-center">${type2}</div>
 </div>
 
 <div class="w-100 d-flex justify-content-center">
-    <div class="heightWeight">weight: 59</div>
-    <div class="heightWeight">height: 30</div>
+    <div class="heightWeight">weight: ${weight} kg</div>
+    <div class="heightWeight">height: ${height} cm</div>
 </div>
 <div class="arrow-container">
     <div class="arrow-left" onclick="previousDetailCard(${id})"><p class="arrows">&#8678</p></div> 
@@ -150,7 +135,7 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             hp
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%" ></div>
+            <div id="${stats[0].name}" class="progress ${bgType1} animated-progress" style="width: 25%" >${stats[0].value}</div>
         </div>
     </div>
     <div class="stats-container d-flex w-100">
@@ -158,7 +143,7 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             attack
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%" ></div>
+            <div id="${stats[1].name}" class="progress ${bgType1} animated-progress" style="width: 25%" >${stats[1].value}</div>
         </div>
     </div>
     <div class="stats-container d-flex w-100">
@@ -166,7 +151,7 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             defense
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%" ></div>
+            <div id="${stats[2].name}" class="progress ${bgType1} animated-progress" style="width: 25%" >${stats[2].value}</div>
         </div>
     </div>
     <div class="stats-container d-flex w-100">
@@ -174,7 +159,7 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             special-attack
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%" >25</div>
+            <div id="${stats[3].name}" class="progress ${bgType1} animated-progress" style="width: 25%" >${stats[3].value}</div>
         </div>
     </div>
     <div class="stats-container d-flex w-100">
@@ -182,7 +167,7 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             special-defense
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%" ></div>
+            <div id="${stats[4].name}" class="progress ${bgType1} animated-progress" style="width: 25%" >${stats[4].value}</div>
         </div>
     </div>
     <div class="stats-container d-flex w-100">
@@ -190,19 +175,18 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
             speed
         </div>
         <div class="progressbar">
-            <div class="progress" style="width: 25%"></div>
+            <div id="${stats[5].name}" class="progress ${bgType1} animated-progress" style="width: 25%">${stats[5].value}</div>
         </div>
     </div>
   </div>
   
   <div id="abilities" class="tabcontent">
-    <h3>Abilities</h3>
-    <p>Paris is the capital of France.</p>
+   
   </div>
   
   <div id="evolution" class="tabcontent">
     <h3>Evolution</h3>
-    <p>Tokyo is the capital of Japan.</p>
+    <p>In progress...</p>
   </div>
 </div>
     `
@@ -210,8 +194,10 @@ function showDetailCardTemplate(id, type1, type2, bgType1, bgType2, name, img){
 
 
 function showLoadingGifInHTMLTemplate(){
-    return  `
-     <h2 class="load-text">loading Pokemon, please wait</h2>
-     <img class="load" src="img/loading.gif" alt="">`
+    return  ` 
+    <div class="w-100 d-flex flex-column justify-content-center align-items-center">
+    <h2 class="load-text text-center">loading Pokemon, please wait</h2>
+    <div class="d-flex w-100 justify-content-center"><img class="load" src="img/loading.gif" alt=""></div>
+    </div>`
  }
  

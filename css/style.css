@@ -168,9 +168,6 @@ h1 {
     width: 30%;
     border-radius: 10px;
     margin-left: 16px;
-    display: flex;
-    justify-content: center;
-    align-items: end;
     padding: 4px 0 4px 0;
     height: 37px;
     margin-bottom: 8px;
@@ -213,10 +210,6 @@ a {
     padding-top: 24px;
 }
 
-.card-main-detail{
-    
-}
-
 .poke-names-detail{
     font-size: 26px;
     margin: 0;
@@ -246,9 +239,6 @@ a {
     right: -62px;
     width: 132px;
     height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     opacity: 0;
     transition: opacity 1s;
 }
@@ -283,17 +273,15 @@ a {
     margin-left: 16px;
 }
 
-/* Style the tab */
 .tab {
     overflow: hidden;
     border-radius: 10px;
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: center;
     color: white;
   }
-  
-  /* Style the buttons that are used to open the tab content */
+
   .tab button {
     background-color: inherit;
     float: left;
@@ -303,47 +291,44 @@ a {
     padding: 14px 16px;
     transition: 0.3s;
     font-weight: bold;
+    font-family: sans-serif;
   }
-  
-  /* Change background color of buttons on hover */
+
   .tab button:hover {
     background-color: #ddd;
   }
   
-  /* Create an active/current tablink class */
   .tab button.active {
     background-color: #ccc;
   }
   
-  /* Style the tab content */
   .tabcontent {
     display: none;
     padding: 6px 12px;
     border: 1px solid #ccc;
     border-top: none;
-    width: 72%;
+    width: 75%;
     color: white;
     animation: fadeEffect 1s;
     border-radius: 10px;
+    font-family: sans-serif;
   }
-
 
   .progressbar {
     background-color: #ccc;
     border-radius: 13px;
-    /* (height of inner div) / 2 + padding */
     width: 40%;
   }
   
  
   .stat{
-    margin-right: 16px;
+    margin-right: 13px;
     align-items: center;
     display: flex;
   }
 
   .stats-container{
-    margin: 8px 0 8px 0;
+    margin: 10px 0 10px 0;
     justify-content: space-between;
   }
 
@@ -355,6 +340,10 @@ a {
     height: 100%;
     padding: 2px;
     box-sizing: border-box;
+    text-align: start;
+    padding-left: 10px;
+    color: black;
+    font-family: sans-serif;
   }
 
   .heightWeight{
@@ -365,14 +354,14 @@ a {
   .arrow-right{
     position: absolute;
     top: -25px;
-    right: 14px;
+    right: 10px;
     font-size: 25px;
   }
 
   .arrow-left{
     position: absolute;
     top: -25px;
-    left: 14px;
+    left: 10px;
     font-size: 25px;
   }
 
@@ -398,67 +387,28 @@ a {
     top: 0;
     right: 5px;
 }
+
+.loadMore{
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.loadMore p{
+    font-size: 18px;
+    margin: 0;
+}
+
+.loadMore:hover{
+    cursor: pointer;
+    background-color: #888;
+}
+
+#morePokemon{
+    height: 60px;
+}
   
 
-@keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-    0% {transform: translateX(100px);}
-    100% {transform: translateX(0);}
-}
-
-@keyframes fadeOut {
-    from {opacity: 1;}
-    to {opacity: 0;}
-    0% {transform: translateX(0);}
-    100% {transform: translateX(100px);}
-}
-
-@keyframes fadeEffect {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
-
-
-@media (max-width: 370px) {
-    .poke-img-container {
-        top: 10px;
-        right: -12px;
-    }
-
-    .poke-img {
-        width: 138px;
-    }
-}
-
-@media (min-width: 500px) {
-   .card{
-    width: 380px;
-    margin-left: 16px;
-    margin-right: 16px;
-   }
-
-   .card-content{
-    display: flex;
-    flex-wrap: wrap;
-    width: 87%;
-   } 
-}
-
-/* @media(min-width: 1230px){
-    .content{
-        background-position: center;
-    }
-} */
-
-@media(min-width: 700px){
-    #menu-icon{
-        display: none;
-    }
-}
-
-@media (max-width: 699px){
-    .nav-icons{
-        display: none;
-    }
-}

@@ -21,6 +21,7 @@
     --flying: #A98FF3;
     --font-solid: 'PokemonSolid';
     --font-hollow: 'PokemonHollow';
+    --width-progress: 10%;
 }
 
 .bg-lila:hover{
@@ -240,4 +241,84 @@
 
 .font-hollow{
     font-family: var(--font-hollow);
+}
+
+
+@keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+    0% {transform: translateX(100px);}
+    100% {transform: translateX(-35px);}
+}
+
+@keyframes fadeOut {
+    from {opacity: 1;}
+    to {opacity: 0;}
+    0% {transform: translateX(-35px);}
+    100% {transform: translateX(100px);}
+}
+
+@keyframes fadeEffect {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+
+  @keyframes load {
+    0% {
+      width: 0;
+    }
+    
+    100% {
+      width: var(--width-progress);
+    }
+  }
+  
+
+
+@media (max-width: 370px) {
+    .poke-img-container {
+        top: 10px;
+        right: -12px;
+    }
+
+    .poke-img {
+        width: 138px;
+    }
+}
+
+@media (min-width: 500px) {
+   .card{
+    width: 380px;
+    margin-left: 16px;
+    margin-right: 16px;
+   }
+
+   .card-content{
+    display: flex;
+    flex-wrap: wrap;
+    width: 87%;
+   } 
+
+   .detail-card{
+    height: 70%;
+   }
+}
+
+@media(min-width: 700px){
+    #menu-icon{
+        display: none;
+    }
+}
+
+@media (max-width: 699px){
+    .nav-icons{
+        display: none;
+    }
+}
+
+@media (max-width: 300px){
+    #search-input {
+        width: 230px;
+}
 }

@@ -9,28 +9,32 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/variablesAndGeneral.css">
-    <script src="script.js"></script>
+    <link rel="icon" type="image/x-icon" href="img/pokeball-icon.ico">
+    <script src="script.js" defer></script>
     <script src="template.js"></script>
+    <script src="classListsCSS.js"></script>
 </head>
 
 <body onload="init()">
     <nav class="main-nav d-flex">
-        <div class="logo d-flex align-items-center">
+       <div class="logo d-flex align-items-center">
             <img class="pokeball-logo" src="img/pokeball.png" alt="">
             <h2 class="headline d-flex align-items-center font-hollow">Pokedex</h2>
-
         </div>
         <div id="menu" class="menu d-flex">
             <img id="menu-icon" src="img/menu-bar.png" onclick="openMobilNav()" alt="">
 
-            <div class="nav-icons">
+            <div id="nav-icons" class="nav-icons">
                 <img id="search-icon" src="img/search-pokemon.png" onclick="showSearchInputField()" alt="">
-                <div id="search-blend" class="search-blend">Suche Pokemon...</div>
+                <div id="search-blend" class="search-blend d-flex justify-content-center align-items-center">Suche
+                    Pokemon...</div>
                 <div id="search-input-container" class="d-flex align-items-center">
-                    <input id="search-input" class="d-none" onkeyup="searchPokemon()" type="text" placeholder="Suche anhand von Namen oder Id...">
-                    <p id="close-mark" class="d-none m-0 text-center bg-lila border-r-10 p-6 close-mark" onclick="hideSearchInputField()">&#10006</p>
+                    <input id="search-input" class="d-none" onkeyup="searchPokemon()" type="text"
+                        placeholder="Suche anhand von Namen oder Id...">
+                    <p id="close-mark" class="d-none m-0 text-center bg-lila border-r-10 p-6 close-mark"
+                        onclick="hideSearchInputField()">&#10006</p>
                 </div>
-                
+
             </div>
         </div>
         <nav id="mobile-nav" class="mobile-nav d-none">
@@ -38,8 +42,9 @@
                 <div class="d-flex justify-content-end">
                     <p class="m-0 text-center bg-lila border-r-10 p-6" onclick="closeMobileNav()">&#10006</p>
                 </div>
-                <p class="m-0 text-center bg-lila border-r-10 p-6 font-solid">Suche</p>
-                <a class="text-center bg-lila border-r-10 p-6 font-solid" href="#">Impressum</a>
+                <p class="m-0 text-center bg-lila border-r-10 p-6 font-solid"
+                    onclick="showSearchInputFieldFromMobileNav()">Suche</p>
+                <a class="text-center bg-lila border-r-10 p-6 font-solid" href="#">Datenschutz</a>
             </div>
         </nav>
     </nav>
@@ -53,13 +58,12 @@
         </div>
         <div id="pokemon-details" class="d-none pokemon-details d-flex w-100 justify-content-center align-items-center">
             <div id="detail-card" class="detail-card flex-column">
-                
-               
-             </div>
+
+
+            </div>
+
         </div>
-        <div id="morePokemon"class="d-none w-100 d-flex justify-content-center">
-            <button onclick="add20morePokemon()"><h2 class="font-solid">load more</h2></button>
-        </div>
+       
     </div>
 </body>
 
